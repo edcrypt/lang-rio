@@ -1,0 +1,6 @@
+
+exp: { message | terminator }
+message: symbol [arguments]
+arguments: "(" [exp [ { "," exp } ]] ")"
+symbol: identifier | NUMBER | STRING
+terminator:= "\n" | ";"
