@@ -1,5 +1,8 @@
 # lang-rio
-Learning how to build an interpreter with Pypy's RPython. Goal: a JIT-compiled interpreter for a simple iolanguage.org-inspired OOPL.
+Learning how to build an interpreter with Pypy's RPython.
+
+Goal: a JIT-compiled interpreter for a simple iolanguage.org-inspired OOPL,
+only a bit more pythonic in style and favored idioms.
 
 
 References
@@ -11,8 +14,8 @@ Coding Guide: http://doc.pypy.org/en/latest/coding-guide.html
 
 Kermit example interpreter:
  - original: https://bitbucket.org/pypy/example-interpreter
- - fork: https://github.com/prologic/kermit
- 
+ - fork: https://github.com/prologic/kermit / https://github.com/edcrypt/kermit
+
 Pypy Tutorial - BF: https://bitbucket.org/brownan/pypy-tutorial/
 
 Other interpreters:
