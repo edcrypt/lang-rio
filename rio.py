@@ -18,6 +18,7 @@ from rpython.rlib.parsing.ebnfparse import parse_ebnf
 # symbol     ::= identifier | number | string
 # terminator ::= "\n" | ";"
 ##############
+# (From the iolang docs. Note that it doesn't include algebraic exprs)
 # See rio/grammar.txt for progress
 
 SYNTAX = ""
