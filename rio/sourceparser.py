@@ -22,11 +22,11 @@ class Node(object):
 class Block(Node):
     """ A list of statements
     """
-    def __init__(self, stmts):
-        self.stmts = stmts
+    def __init__(self, exprs):
+        self.exprs = exprs
 
-class Stmt(Node):
-    """ A single statement
+class Expr(Node):
+    """ A single expression
     """
     def __init__(self, expr):
         self.expr = expr
@@ -55,10 +55,16 @@ class Transformer(object):
     to something easier to work with
     """
     def visit_main(self, node):
-        return Block([self.visit_stmt(node.children[0].children[0])])
+        return Block([self.visit_expr(exprnode)
+                      for exprnode in node.children])
 
-    def visit_stmt(self, node):
-        return Stmt(self.visit_expr(node.children[0]))
+    def visit_block(self, node):
+        pass
+
+    def visit_msg(self, node):
+        chnode = node.children[0]
+        # either symbol or args
+        return Message()
 
     def visit_expr(self, node):
         chnode = node.children[0]
