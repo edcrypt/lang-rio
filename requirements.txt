@@ -1,0 +1,6 @@
+ipdb==0.8.1
+ipython==4.0.1
+ptpython==0.25
+py==1.4.31
+pytest==2.8.5
+rpython==0.1.4
