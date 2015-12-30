@@ -2,10 +2,13 @@ IGNORE: " ";
 NUMBER: "-?0|[1-9][0-9]*";
 IDENTIFIER: "[a-zA-Z_][0-9a-zA-Z_]*";
 NL: "\n";
-SC: ";"
-
-exp: (message | [terminator])*;
-message: symbol arguments;
-arguments: ["("] (exp ( ( [","] exp )* )? )? [")"];
+SC: ";";
+ARGSSEP: ",";
+terminator: NL | SC;
+expr: message | message >msgtail<*;
+msgtail: >expr< | [terminator];
+message: symbol arguments?;
+arguments: ["("] (expr <argtail>*)? [")"];
+argtail: [ARGSSEP] expr;
 symbol: <IDENTIFIER> | <NUMBER>;
-terminator:= NL | SC;
+
