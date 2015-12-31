@@ -1,6 +1,7 @@
 """
 """
 import py
+from rpython.rlib.parsing.tree import RPythonVisitor
 from rpython.rlib.parsing.ebnfparse import parse_ebnf, make_parse_function
 from rio import rio_dir
 
@@ -50,31 +51,31 @@ class Identifier(Node):
         """
         self.varname = varname
 
-class Transformer(object):
+class Transformer(RPythonVisitor):
     """ Transforms AST from the obscure format given to us by the ebnfparser
     to something easier to work with
     """
     def visit_main(self, node):
-        return Block([self.visit_expr(exprnode)
-                      for exprnode in node.children])
+        # a program is a single block of code
+        return self.dispatch(node.children[0])
 
     def visit_block(self, node):
-        pass
-
-    def visit_msg(self, node):
-        chnode = node.children[0]
-        # either symbol or args
-        return Message()
+        # a block is built of multiple expressions
+        return Block([self.dispatch(exprnode)
+                      for exprnode in node.children])
 
     def visit_expr(self, node):
-        chnode = node.children[0]
-        if chnode.symbol == 'NUMBER':
-            return ConstantInt(int(chnode.additional_info))
-        # xxx
+        # every expression is a message chain
+        return Expr([self.dispatch(child)
+                     for child in node.children])
+
+    def visit_message(self, node):
+        # a message (fragment) is a symbol and maybe some args
+        child = node.children[0].children[0]
+        return Message(ConstantInt(child.additional_info))
 
 transformer = Transformer()
-
 def parse(source):
     """ Parse the source code and produce an AST
     """
-    return transformer.visit_main(_parse(source))
+    return transformer.dispatch(_parse(source))
