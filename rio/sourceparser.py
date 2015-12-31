@@ -27,10 +27,10 @@ class Block(Node):
         self.exprs = exprs
 
 class Expr(Node):
-    """ A single expression
+    """ A message chain.
     """
-    def __init__(self, expr):
-        self.expr = expr
+    def __init__(self, msgs):
+        self.msgs = msgs
 
 class Message(Node):
     """ Represent a message send.
@@ -46,9 +46,9 @@ class ConstantInt(Node):
         self.intval = intval
 
 class Identifier(Node):
+    """ A variable reference.
+    """
     def __init__(self, varname):
-        """ A variable reference.
-        """
         self.varname = varname
 
 class Transformer(RPythonVisitor):
