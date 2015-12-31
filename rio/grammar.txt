@@ -6,8 +6,8 @@ TERM: "[\n;]";
 
 main: block [EOF];
 
-block: expr >block< | expr;
-expr: message | message >expr< [TERM];
+block: expr [TERM] >block< | expr;
+expr: message >expr< | message;
 message: symbol arguments?;
 arguments: ["("] (expr <argtail>*)? [")"];
 argtail: [ARGSSEP] expr;

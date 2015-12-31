@@ -27,17 +27,19 @@ class Block(Node):
         self.exprs = exprs
 
 class Expr(Node):
-    """ A message chain.
+    """ An expression (a message chain).
     """
-    def __init__(self, msgs):
-        self.msgs = msgs
+    def __init__(self, head, tail=None):
+        self.head = head
+        self.tail = None
 
 class Message(Node):
     """ Represent a message send.
     """
-    def __init__(self, head, tail=None):
-        self.head = head
-        self.tail = tail
+    def __init__(self, target, args=None):
+        # target could be either a literal or a slot
+        self.target = target
+        self.args = args
 
 class ConstantInt(Node):
     """ Represent a constant - integer type
@@ -46,7 +48,8 @@ class ConstantInt(Node):
         self.intval = intval
 
 class Identifier(Node):
-    """ A variable reference.
+    """ Identifier fora slot reference.
+    Either an attribure or a method.
     """
     def __init__(self, varname):
         self.varname = varname
@@ -71,11 +74,27 @@ class Transformer(RPythonVisitor):
 
     def visit_message(self, node):
         # a message (fragment) is a symbol and maybe some args
-        child = node.children[0].children[0]
-        return Message(ConstantInt(child.additional_info))
+        target = self.dispatch(node.children[0])
+        args = (self.dispatch(node.children[1])
+                if len(node.children) > 1 else None)
+        return Message(target, args)
+
+    def visit_argument(self, node):
+        pass
+
+    # LITERALS/SYMBOLS
+    def visit_NUMBER(self, node):
+        return ConstantInt(node.additional_info)
+
+    def visit_IDENTIFIER(self, node):
+        return Identifier(node.additional_info)
+
 
 transformer = Transformer()
+
 def parse(source):
     """ Parse the source code and produce an AST
     """
-    return transformer.dispatch(_parse(source))
+    tree = _parse(source)
+    tree = ToAST().transform(tree)
+    return transformer.dispatch(tree)
