@@ -3,137 +3,135 @@
 #+EMAIL: eduardo.padoan@gmail.com
 #+DESCRIPTION: Design goals and development TODOs for the RIO language
 
-* RIO GOALS
+* RIO Programming Language design
+  RPython Io-like language
 
-** RIO Programming Language
-   RPython Io-like language
+** COMMENT Operator shuffling + indentation?
+   Could we use Ioke's concept of operator shuffling to implement Python-style whitespace based block delimitation?
 
-*** COMMENT Operator shuffling + indentation?
-    Could we use Ioke's concept of operator shuffling to implement Python-style whitespace based block delimitation?
+** Inspirations
 
-*** Inspirations
+*** [[http://iolanguage.org]]
 
-**** [[http://iolanguage.org]]
+**** simple syntax
+**** actor-model/futures and coroutines
+**** prototype-based object model
+**** differential inheritance
+**** first class, dynamic message sending
+**** homoiconicity
+     Every expression is a message, every value is an object
 
-***** simple syntax
-***** actor-model/futures and coroutines
-***** prototype-based object model
-***** differential inheritance
-***** first class, dynamic message sending
-***** homoiconicity
-      Every expression is a message, every value is an object
+*** Python
 
-**** Python
+**** Style, favored idioms
+**** [[https://www.python.org/dev/peps/pep-0020/][Zen of Python]] as a design guide
+**** Self-documented
+**** Fine balance between pragmatism and conceptual purity
+**** *args, **kwargs
+     [2016-01-01 sex 15:14]
+     Maybe just *args, converting both positional and keyword arguments into a table-like data structure.
 
-***** Style, favored idioms
-***** [[https://www.python.org/dev/peps/pep-0020/][Zen of Python]] as a design guide
-***** Self-documented
-***** Fine balance between pragmatism and conceptual purity
-***** *args, **kwargs
-      [2016-01-01 sex 15:14]
-      Maybe just *args, converting both positional and keyword arguments into a table-like data structure.
+*** Fish Shell
 
-**** Fish Shell
+**** [[http://fishshell.com/docs/current/design.html][Design principles]]
+**** No hidden or "advanced" features
+**** Discoverability
+**** Maximum comfort out of the box
 
-***** [[http://fishshell.com/docs/current/design.html][Design principles]]
-***** No hidden or "advanced" features
-***** Discoverability
-***** Maximum comfort out of the box
+*** [[https://ioke.org/index.html][Ioke]]
 
-**** [[https://ioke.org/index.html][Ioke]]
+**** Operator shuffling
+**** Expressivity
 
-***** Operator shuffling
-***** Expressivity
+*** Smalltalk
 
-**** Smalltalk
+**** Integrated, live scriptable environment
 
-***** Integrated, live scriptable environment
+*** Lisp
+    [2016-01-01 sex 15:00]
 
-**** Lisp
+**** Explicit laziness ('quoting)
      [2016-01-01 sex 15:00]
 
-***** Explicit laziness ('quoting)
-      [2016-01-01 sex 15:00]
+     Alias to "Core message(...)"
 
-      Alias to "Core message(...)"
+*** Lua
+    [2016-01-01 sex 15:03]
 
-**** Lua
+**** "Table"-like data structure
      [2016-01-01 sex 15:03]
 
-***** "Table"-like data structure
-      [2016-01-01 sex 15:03]
+***** But with another name? "table" brings up 2D at least.
+***** Maybe our table should support multiple dimensions.
+***** Also, all items should be indexed by *both* a numeric index and a hashable arbitrary optional "key". 
+      In a way, it's kinda like Python's OrderedDict.
+***** Indexing should be 0-based.
+***** list and dict could be Core methods (Builtin/Lobby methods)
+      Coerce iterables to index-based only and key-based only tables.
 
-****** But with another name? "table" brings up 2D at least.
-****** Maybe our table should support multiple dimensions.
-****** Also, all items should be indexed by *both* a numeric index and a hashable arbitrary optional "key". 
-       In a way, it's kinda like Python's OrderedDict.
-****** Indexing should be 0-based.
-****** list and dict could be Core methods (Builtin/Lobby methods)
-       Coerce iterables to index-based only and key-based only tables.
-
-*** New (?) ideas
+** New (?) ideas
 [2016-01-01 sex 15:16]
 
-**** 'quoting and '*multiquoting on method definition
-     [2016-01-01 sex 15:17]
-     Passed arguments are passed as unevalued messages - useful for code blocks. 
-     Also, explicit is better than implicit.
-     Block = list? So that '*multiquoting works for defining blocks
+*** 'quoting and '*multiquoting on method definition
+    [2016-01-01 sex 15:17]
+    Passed arguments are passed as unevalued messages - useful for code blocks. 
+    Also, explicit is better than implicit.
+    Block = list? So that '*multiquoting works for defining blocks
 
-** RIO Interpreter
-   [[https://github.com/edcrypt/lang-rio][lang-rio]] pypy target
+* RIO Interpreter
+  [[https://github.com/edcrypt/lang-rio][lang-rio]] pypy target
 
-*** TODO parser unit tests
+** TODO parser unit tests
 
-*** TODO parser
-    :PROPERTIES:
-    :ID:       8E7756DC-31F8-4E3A-AB49-036F0F4A49DE
-    :END:
-    Should parse at least the basic syntax described on the Io documentation, without strings.
-    Use EBFN lib, generate an AST.
+** TODO parser
+   :PROPERTIES:
+   :ID:       8E7756DC-31F8-4E3A-AB49-036F0F4A49DE
+   :END:
+   Should parse at least the basic syntax described on the Io documentation, without strings.
+   Use EBFN lib, generate an AST.
 
-**** DONE Parse integers, basic messages and blocks.
+*** DONE Parse integers, basic messages and blocks.
      CLOSED: [2016-01-01 Sex 20:24]
 [2016-01-01 sex 15:25]
 
-**** TODO More tests
+*** TODO More tests
 [2016-01-01 sex 15:27]
 
-***** TODO Complex messages
+**** TODO Complex messages
 [2016-01-01 sex 15:29]
 
-***** TODO Code blocks
+**** TODO Code blocks
 [2016-01-01 sex 15:30]
 
-***** TODO Arguments (single, multiple...)
+**** TODO Arguments (single, multiple...)
 [2016-01-01 sex 15:31]
-*** TODO basic compilation
-    :PROPERTIES:
-    :ID:       47201609-4769-46D7-8ECE-E85B51C81172
-    :END:
+** TODO basic compilation
+   :PROPERTIES:
+   :ID:       47201609-4769-46D7-8ECE-E85B51C81172
+   :END:
 
-*** TODO actually interpret the basic language
-    :PROPERTIES:
-    :ID:       3DD1F904-684B-4089-8AF4-8345BD263651
-    :END:
-    Probably when we need a object space.
+** TODO actually interpret the basic language
+   :PROPERTIES:
+   :ID:       3DD1F904-684B-4089-8AF4-8345BD263651
+   :END:
+   Probably when we need a object space.
 
-*** TODO I/O support
+** TODO I/O support
 
-*** TODO add strings, other numeric types
-    :PROPERTIES:
-    :ID:       DDE319A3-5918-44BB-904A-A23F9CDCD43B
-    :END:
+** TODO add strings, other numeric types
+   :PROPERTIES:
+   :ID:       DDE319A3-5918-44BB-904A-A23F9CDCD43B
+   :END:
 
-*** TODO add operator shuffling
-    :PROPERTIES:
-    :ID:       E7C952D1-AA7B-4091-A5E5-2E7F4D39D9B2
-    :END:
-    To support basic C/Python-style algebraic syntaxes and boolean operators as method calls.
+** TODO add operator shuffling
+   :PROPERTIES:
+   :ID:       E7C952D1-AA7B-4091-A5E5-2E7F4D39D9B2
+   :END:
+   To support basic C/Python-style algebraic syntaxes and boolean operators as method calls.
 
-*** TODO Coroutines
-    Basic coroutine support - should serve as basis for the scheduler, actors, futures
-*** TODO Write documentation
-    [2016-01-01 sex 19:03]
+** TODO Coroutines
+   Basic coroutine support - should serve as basis for the scheduler, actors, futures
+** TODO Write documentation
+   [2016-01-01 sex 19:03]
 
-    Tutorial (by examples), some design documents
+   Tutorial (by examples), some design documents
