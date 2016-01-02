@@ -30,7 +30,13 @@ def test_parse_no_args():
     # and calling a method. But you should be able to 'quote a message.
     # Also, we can use get_slot
     assert parse('a') == Block([Expr([Message(Identifier('a'))])])
+    assert parse('a;') == parse('a')
     assert parse('a()') == Block([Expr([Message(Identifier('a'))])])
+    assert parse('a()') == parse('a;')
+    assert parse('a\n') == Block([Expr([Message(Identifier('a'))])])
+    assert parse('a\n') == parse('a()')
+    assert parse('a;\n') == parse('a')
+    assert parse('a()\n') == parse('a')
     assert parse('a b()') == Block(
         [Expr([Message(Identifier('a')),
                Message(Identifier('b'))])])

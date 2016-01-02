@@ -2,11 +2,11 @@ IGNORE: " ";
 ARGSSEP: ",";
 NUMBER: "-?0|[1-9][0-9]*";
 IDENTIFIER: "[a-zA-Z_][0-9a-zA-Z_]*";
-TERM: "[\n;]";
+TERM: "\n+|;|;\n+";
 
 main: block [EOF];
 
-block: expr [TERM] >block< | expr;
+block: expr [TERM] >block< | expr [TERM]?;
 expr: message >expr< | message;
 message: symbol arguments?;
 arguments: ["("] (expr <argtail>*)? [")"];
