@@ -1,8 +1,12 @@
 """
-Rio language interpreter
-------------------------
+Rio PL interpreter
+------------------
 
+
+Author: Eduardo de Oliveira Padoan
+Email:  eduardo.padoan@gmail.com
 """
+
 import os
 import sys
 

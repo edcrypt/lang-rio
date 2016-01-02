@@ -1,7 +1,17 @@
+"""
+Rio PL interpreter
+------------------
 
-from rio.sourceparser import (
-    parse, Expr, Block, Message, ConstantInt, Identifier
+
+Author: Eduardo de Oliveira Padoan
+Email:  eduardo.padoan@gmail.com
+"""
+
+from rio.sourceparser import parse
+from rio.ast import (
+    Expr, Block, Message, ConstantInt, Identifier
 )
+
 
 def test_parse_basic():
     assert parse('50') == Block([Expr([Message(ConstantInt('50'))])])
