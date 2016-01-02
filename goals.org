@@ -134,4 +134,4 @@
 ** TODO Write documentation
    [2016-01-01 sex 19:03]
 
-   Tutorial (by examples), some design documents
+   Tutorial (by examples), some design documents, a style guideline (for rpython and rio code)

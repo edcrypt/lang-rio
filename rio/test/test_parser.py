@@ -64,17 +64,23 @@ def test_parse_args():
     )
 
 def test_parse_blocks():
-    assert parse('a b c\nd') == Block(
-        [Expr([Message(Identifier('a')),
-               Message(Identifier('b')),
-               Message(Identifier('c'))]),
-        Expr([Message(Identifier('d'))])]
-    )
-    assert parse('a b c; d') == Block(
-        [Expr([Message(Identifier('a')),
-               Message(Identifier('b')),
-               Message(Identifier('c'))]),
-        Expr([Message(Identifier('d'))])]
-    )
-
-
+    assert parse('a b c\nd') == Block([
+        Expr([Message(Identifier('a')),
+              Message(Identifier('b')),
+              Message(Identifier('c'))]),
+        Expr([Message(Identifier('d'))]),
+    ])
+    assert parse('a b c; d') == Block([
+        Expr([Message(Identifier('a')),
+              Message(Identifier('b')),
+              Message(Identifier('c'))]),
+        Expr([Message(Identifier('d'))]),
+    ])
+    assert parse('a;b;c') == parse('a\nb\nc')
+    assert parse('a;b b1;c') == parse('a\nb b1\nc')
+    assert parse('1;a;b') == Block([
+        Expr([Message(ConstantInt('1'))]),
+        Expr([Message(Identifier('a'))]),
+        Expr([Message(Identifier('b'))]),
+    ])
+    assert parse(' a ; b ') == parse('a;b')
