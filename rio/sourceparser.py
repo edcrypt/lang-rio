@@ -26,12 +26,17 @@ class Block(Node):
     def __init__(self, exprs):
         self.exprs = exprs
 
+    def __repr__(self):
+        return 'Block({})'.format(self.exprs)
+
 class Expr(Node):
     """ An expression (a message chain).
     """
-    def __init__(self, head, tail=None):
-        self.head = head
-        self.tail = None
+    def __init__(self, msgchain):
+        self.msgchain = msgchain
+
+    def __repr__(self):
+        return 'Expr({})'.format(self.msgchain)
 
 class Message(Node):
     """ Represent a message send.
@@ -41,11 +46,19 @@ class Message(Node):
         self.target = target
         self.args = args
 
+    def __repr__(self):
+        if self.args is None:
+            return 'Message({})'.format(self.target)
+        return 'Message({}, {})'.format(self.target, self.args)
+
 class ConstantInt(Node):
     """ Represent a constant - integer type
     """
     def __init__(self, intval):
         self.intval = intval
+
+    def __repr__(self):
+        return 'ConstantInt({})'.format(self.intval)
 
 class Identifier(Node):
     """ Identifier fora slot reference.
@@ -53,6 +66,9 @@ class Identifier(Node):
     """
     def __init__(self, varname):
         self.varname = varname
+
+    def __repr__(self):
+        return 'Identifier("{}")'.format(self.varname)
 
 class Transformer(RPythonVisitor):
     """ Transforms AST from the obscure format given to us by the ebnfparser
