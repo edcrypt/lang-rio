@@ -27,6 +27,7 @@
 **** [[https://www.python.org/dev/peps/pep-0020/][Zen of Python]] as a design guide
 **** Self-documented
 **** Fine balance between pragmatism and conceptual purity
+**** Modularity and scopping rules
 **** *args, **kwargs
      [2016-01-01 sex 15:14]
      Maybe just *args, converting both positional and keyword arguments into a table-like data structure.
@@ -55,6 +56,9 @@
 
      Alias to "Core message(...)"
 
+*** Haskell
+**** [[https://www.haskell.org/tutorial/patterns.html][Pattern matching]]
+     Kinda like [[https://pypi.python.org/pypi/multimethod/][Multimethods]] (see [[http://www.artima.com/weblogs/viewpost.jsp?thread%3D101605][also]]) or overloading
 *** Lua
     [2016-01-01 sex 15:03]
 
