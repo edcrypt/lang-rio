@@ -83,7 +83,14 @@ def test_parse_blocks():
         Expr([Message(Identifier('d'))]),
     ])
     assert parse('a;b;c') == parse('a\nb\nc')
+    assert parse('a;b;\nc') == parse('a\n\nb\nc')
+    assert parse('a;b;c') == parse('a\nb\n\nc\n')
+    assert parse('a;b;c') == parse('a\n\n\n\nb\n\n\nc')
     assert parse('a;b b1;c') == parse('a\nb b1\nc')
+    assert parse('a;\nb b1;c') == parse('a\nb b1;\n\nc')
+    assert parse('a\nb b1;c') == parse('a\nb b1;\n\nc')
+    assert parse('a\nb b1;c') == parse('a\nb b1;\n\nc;')
+    assert parse('a\nb b1;c') == parse('a\nb b1;\n\nc;\n\n')
     assert parse('1;a;b') == Block([
         Expr([Message(ConstantInt('1'))]),
         Expr([Message(Identifier('a'))]),
