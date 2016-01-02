@@ -13,7 +13,7 @@ from rpython.rlib.parsing.ebnfparse import parse_ebnf, make_parse_function
 
 from rio import rio_dir
 from rio.ast import (
-    Expr, Block, Message, ConstantInt, Identifier
+    Expr, Block, Message, Args, ConstantInt, Identifier
 )
 
 
@@ -43,12 +43,14 @@ class Transformer(RPythonVisitor):
     def visit_message(self, node):
         # a message (fragment) is a symbol and maybe some args
         target = self.dispatch(node.children[0])
-        args = (self.dispatch(node.children[1])
-                if len(node.children) > 1 else None)
-        return Message(target, args)
+        if len(node.children) > 1 and node.children[1].children:
+            args = self.dispatch(node.children[1])
+            return Message(target, args)
+        return Message(target)
 
-    def visit_argument(self, node):
-        pass
+    def visit_arguments(self, node):
+        return Args([self.dispatch(child)
+                     for child in node.children])
 
     # LITERALS/SYMBOLS
     def visit_NUMBER(self, node):

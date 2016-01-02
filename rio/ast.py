@@ -44,9 +44,20 @@ class Message(Node):
         self.args = args
 
     def __repr__(self):
-        if self.args is None:
-            return 'Message({})'.format(self.target)
-        return 'Message({}, {})'.format(self.target, self.args)
+        if self.args:
+            return 'Message({}, {})'.format(self.target, self.args)
+        return 'Message({})'.format(self.target)
+
+class Args(Node):
+    """ An argument list of a message.
+    """
+    def __init__(self, values):
+        self.values = values
+
+    def __repr__(self):
+        return 'Args({})'.format(self.values)
+
+# TERMINALS
 
 class ConstantInt(Node):
     """ Represent a constant - integer type
