@@ -6,6 +6,8 @@ Learning how to build an interpreter with Pypy's RPython.
 Goal: a JIT-compiled interpreter for a simple iolanguage.org-inspired
 OOPL, only a bit more pythonic in style and favored idioms.
 
+See goals.org_ for design goals and ideas.
+
 References
 ==========
 
@@ -28,3 +30,5 @@ Other interpreters:
 - Prolog on Pypy: http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.103.1886&rep=rep1&type=pdf
 
 EBNF: http://doc.pypy.org/en/release-1.9/rlib.html#ebnf
+
+.. _goals.org: ./goals.org
