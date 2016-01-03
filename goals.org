@@ -3,6 +3,8 @@
 #+EMAIL: eduardo.padoan@gmail.com
 #+DESCRIPTION: Design goals and development TODOs for the RIO language
 
+* COMMENT org-ruby produces an ugly html version, so it won't be that beautiful on github
+
 * RIO Programming Language design
   RPython Io-like language
 
@@ -81,6 +83,24 @@
     Passed arguments are passed as unevalued messages - useful for code blocks. 
     Also, explicit is better than implicit.
     Block = list? So that '*multiquoting works for defining blocks
+
+*** Core object and namespacing
+
+**** Core is like Python's builtin and Io's Lobby
+     Trying to mimic Python's semantic with less bytecode and more io-like
+
+***** By default, the first message on a chain is addressed to Core
+****** We are always pushing a namespace object on the stack when we start an expression
+****** On module level: '(foo bar) -> '(Core foo bar)
+***** "Local" namespace:
+****** On module level, points directly to the Core object
+******* Core local -> Core
+****** On method level, "Core local" points to the local context object
+******* Core local -> LocalNamespace
+******* Core local self -> the object the current method belongs
+****** TODO methods that work "class body"
+****** TODO nested functions, nonlocal
+
 
 * RIO Interpreter
   [[https://github.com/edcrypt/lang-rio][lang-rio]] pypy target

@@ -30,14 +30,22 @@ References
 * `Pypy Tutorial - BF`_
 * `EBNF`_
 
-Other interpreters:
+* Other interpreters:
 
-- lang-io: https://bitbucket.org/pypy/lang-io/
-- CyCy: https://media.readthedocs.org/pdf/building-an-interpreter-with-rpython/latest/building-an-interpreter-with-rpython.pdf
-- Pypy.js: http://pypyjs.org/
-- Prolog on Pypy: http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.103.1886&rep=rep1&type=pdf
+  - lang-io: https://bitbucket.org/pypy/lang-io/
+  - CyCy: https://media.readthedocs.org/pdf/building-an-interpreter-with-rpython/latest/building-an-interpreter-with-rpython.pdf
+  - Pypy.js: http://pypyjs.org/
+  - Prolog on Pypy: http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.103.1886&rep=rep1&type=pdf
 
+* On bytecode generation:
 
+  - `All Singing All Dancing Python Bytecode`_
+  - `Maynard`_
+  - `Byterun`_
+
+.. _All Singing All Dancing Python Bytecode: https://www.youtube.com/watch?v=0IzXcjHs-P8#t=36s
+.. _Byterun: https://github.com/nedbat/byterun
+.. _Maynard: https://bitbucket.org/larry/maynard
 .. _goals.org: ./goals.org
 .. _Io: http://iolanguage.org
 .. _Getting Started:  http://doc.pypy.org/en/latest/getting-started-dev.html
