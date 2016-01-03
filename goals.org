@@ -85,9 +85,11 @@
 * RIO Interpreter
   [[https://github.com/edcrypt/lang-rio][lang-rio]] pypy target
 
-** TODO parser unit tests
+** DONE parser unit tests
+   CLOSED: [2016-01-03 Dom 12:40]
 
-** TODO parser
+** DONE parser
+   CLOSED: [2016-01-03 Dom 12:41]
    :PROPERTIES:
    :ID:       8E7756DC-31F8-4E3A-AB49-036F0F4A49DE
    :END:
@@ -98,16 +100,20 @@
      CLOSED: [2016-01-01 Sex 20:24]
 [2016-01-01 sex 15:25]
 
-*** TODO More tests
+*** DONE More tests
+    CLOSED: [2016-01-03 Dom 12:41]
 [2016-01-01 sex 15:27]
 
-**** TODO Complex messages
+**** DONE Complex messages
+     CLOSED: [2016-01-03 Dom 12:41]
 [2016-01-01 sex 15:29]
 
-**** TODO Code blocks
+**** DONE Code blocks
+     CLOSED: [2016-01-03 Dom 12:41]
 [2016-01-01 sex 15:30]
 
-**** TODO Arguments (single, multiple...)
+**** DONE Arguments (single, multiple...)
+     CLOSED: [2016-01-03 Dom 12:41]
 [2016-01-01 sex 15:31]
 ** TODO basic compilation
    :PROPERTIES:
