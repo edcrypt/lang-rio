@@ -7,7 +7,7 @@ Author: Eduardo de Oliveira Padoan
 Email:  eduardo.padoan@gmail.com
 """
 
-from rio.sourceparser import parse
+from rio.parser import parse
 from rio.ast import (
     Expr, Block, Message, Args, ConstantInt, Identifier
 )

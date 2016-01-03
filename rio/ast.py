@@ -17,6 +17,9 @@ class Node(object):
     def __ne__(self, other):
         return not self == other
 
+    def compile(self, ctx):
+        return NotImplemented
+
 class Block(Node):
     """ A list of statements
     """
@@ -25,6 +28,12 @@ class Block(Node):
 
     def __repr__(self):
         return 'Block({})'.format(self.exprs)
+
+    def compile(self, ctx):
+        """ Compile each statement in the block.
+        """
+        for expr in self.expr:
+            expr.compile(ctx)
 
 class Expr(Node):
     """ An expression (a message chain).

@@ -11,20 +11,15 @@ import py
 from rpython.rlib.parsing.tree import RPythonVisitor
 from rpython.rlib.parsing.ebnfparse import parse_ebnf, make_parse_function
 
-from rio import rio_dir
+from rio import RIO_DIR
 from rio.ast import (
     Expr, Block, Message, Args, ConstantInt, Identifier
 )
 
 
-grammar = py.path.local(rio_dir).join('grammar.txt').read("rt")
-regexs, rules, ToAST = parse_ebnf(grammar)
-_parse = make_parse_function(regexs, rules, eof=True)
-
-
 class Transformer(RPythonVisitor):
-    """ Transforms AST from the obscure format given to us by the ebnfparser
-    to something easier to work with
+    """ Transforms an AST from the format given to us by the ebnfparser
+    to something easier to work with.
     """
     def visit_main(self, node):
         # a program is a single block of code
@@ -60,11 +55,33 @@ class Transformer(RPythonVisitor):
         return Identifier(node.additional_info)
 
 
-transformer = Transformer()
+class RioParser(object):
+    """ Uses a grammar file to generate an AST for some source code in RIO.
+    """
+    def __init__(self, grammar_dir=RIO_DIR,
+                 grammar_filename='grammar.ebnf',
+                 TransformerKlass=Transformer,
+                 *targs, **tkw):
+        self.grammar = py.path.local(
+           grammar_dir).join(grammar_filename).read("rt")
+        self.transformer = TransformerKlass(*targs, **tkw)
+        self._make_parse_function()
+
+    def _make_parse_function(self):
+        regexs, rules, ToAST = parse_ebnf(self.grammar)
+        self._clean_tree = ToAST().transform
+        self._parse = make_parse_function(regexs, rules, eof=True)
+
+    def gen_ast(self, source):
+        tree_from_enbf = self._parse(source)
+        cleaned_tree = self._clean_tree(tree_from_enbf)
+        return self.transformer.dispatch(cleaned_tree)
+
+
+_rio_parser = RioParser()
 
 def parse(source):
     """ Parse the source code and produce an AST
     """
-    tree = _parse(source)
-    tree = ToAST().transform(tree)
-    return transformer.dispatch(tree)
+    return _rio_parser.gen_ast(source)
+

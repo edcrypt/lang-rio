@@ -1,2 +1,2 @@
 import os
-rio_dir = os.path.dirname(os.path.abspath(__file__))
+RIO_DIR = os.path.dirname(os.path.abspath(__file__))
