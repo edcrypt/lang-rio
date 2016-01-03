@@ -36,6 +36,8 @@ References
   - CyCy: https://media.readthedocs.org/pdf/building-an-interpreter-with-rpython/latest/building-an-interpreter-with-rpython.pdf
   - Pypy.js: http://pypyjs.org/
   - Prolog on Pypy: http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.103.1886&rep=rep1&type=pdf
+  - Smalltalk: `Implementing a SM VM in Pypy in 1w`_ / `RSqueak`_
+  - Pixie (lisp): https://github.com/pixie-lang/pixie
 
 * On bytecode generation:
 
@@ -52,4 +54,5 @@ References
 .. _Coding Guide: http://doc.pypy.org/en/latest/coding-guide.html
 .. _Pypy Tutorial - BF: https://bitbucket.org/brownan/pypy-tutorial/
 .. _EBNF: http://doc.pypy.org/en/release-1.9/rlib.html#ebnf
-
+.. _Implementing a SM VM in Pypy in 1w: http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.144.8184&rep=rep1&type=pdf
+.. _RSqueak: https://github.com/HPI-SWA-Lab/RSqueak

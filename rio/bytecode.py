@@ -23,7 +23,7 @@ Email:  eduardo.padoan@gmail.com
 
 
 
-bytecodes = [
+BYTECODES = [
     'PUSH_NAME',     # Push name #N from context to the stack
 
     'PUSH_CONST',    # Push constant #N from context to the stack
