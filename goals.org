@@ -98,7 +98,7 @@
 ****** On method level, "Core local" points to the local context object
 ******* Core local -> LocalNamespace
 ******* Core local self -> the object the current method belongs
-****** TODO methods that work "class body"
+****** TODO methods that work as "class body" when cloning
 ****** TODO nested functions, nonlocal
 
 
