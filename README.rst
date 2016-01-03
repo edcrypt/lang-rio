@@ -8,6 +8,13 @@ OOPL, only a bit more pythonic in style and favored idioms.
 
 See goals.org_ file for design goals, ideas and progress.
 
+To check the parser working::
+
+  pip install -r requirements
+  pip install http://www.pygame.org/ftp/pygame-1.9.1release.tar.gz
+  python -m rio.parser "a b c(d); 50" --draw
+
+
 References
 ==========
 
