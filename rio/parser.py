@@ -21,8 +21,11 @@ class Transformer(RPythonVisitor):
     """ Transforms an AST from the format given to us by the ebnfparser
     to something easier to work with.
     """
+    debug = False
     def visit_main(self, node):
         # a program is a single block of code
+        if self.debug:
+            node.view()
         return self.dispatch(node.children[0])
 
     def visit_block(self, node):
@@ -77,11 +80,27 @@ class RioParser(object):
         cleaned_tree = self._clean_tree(tree_from_enbf)
         return self.transformer.dispatch(cleaned_tree)
 
+    def debug_mode(self):
+        """Draw a pretty graph of the parsed AST
+        """
+        self.transformer.debug = True
 
 _rio_parser = RioParser()
 
-def parse(source):
+def parse(source, debug=False):
     """ Parse the source code and produce an AST
     """
     return _rio_parser.gen_ast(source)
 
+if __name__ == '__main__':
+    import sys
+    if '--draw' in sys.argv:
+        _rio_parser.debug_mode()
+    try:
+        source = py.path.local(sys.argv[1], expanduser=True).read('rt')
+    except IndexError:
+        print 'python -m rio.parser file_or_code [--draw]'
+        sys.exit(1)
+    except py.error.ENOENT:
+        source = sys.argv[1]
+    print parse(source)
