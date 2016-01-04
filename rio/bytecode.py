@@ -42,7 +42,7 @@ BYTECODES = [
                      # Remove top + N items from stack, add msg result back
 
     ### Bytecode emitted by 'primitive' methods
-    'JUMP_IF_FALSE',    # Jump forwards in the bytecode counter of TOS is False
+    'JUMP_IF_FALSE',    # Jump forwards in the bytecode counter if TOS is False
                         # Also add this point to a 'marks ring' on the context
 
     'JUMP_BACKWARDS',   # Jump back to the latest mark on the ring
