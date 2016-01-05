@@ -44,17 +44,14 @@ BYTECODES = [
     'SEND_MSG',       # Remove TOS, exec it and add msg result back in the stack
 
     ### Bytecode emitted by 'primitive' methods
-    'JUMP_IF_FALSE',    # Jump forwards in the bytecode counter if TOS is False
-                        # Also add this point to a 'marks ring' on the context
-
-    'RETURN_VALUE',   # End current block with TOS as message return value
-
-    ### Bytecode emitted by 'primitive' methods
     #   Control flow
     'JUMP_IF_FALSE',  # Jump forwards in the bytecode counter of TOS is False
                       # Also add this point to a 'marks ring' on the context
 
     'JUMP_BACKWARDS', # Jump back to the latest mark on the ring
+
+    'RETURN_VALUE',   # End current block with TOS as message return value
+
     #   Algebra
     'BINARY_ADD',
     # TODO...
