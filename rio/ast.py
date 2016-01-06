@@ -7,6 +7,9 @@ Author: Eduardo de Oliveira Padoan
 Email:  eduardo.padoan@gmail.com
 """
 
+from rio import bytecode
+
+
 class Node(object):
     """ A node on the Abstract Syntax Tree
     """
@@ -44,6 +47,13 @@ class Expr(Node):
     def __repr__(self):
         return 'Expr({})'.format(self.msgchain)
 
+    def compile(self, ctx):
+        for msg in self.msgchain[:-1]:
+            msg.compile(ctx)
+        self.msgchain[-1].compile(ctx, last=True)
+        # emit SEND_MSG?
+        ctx.emit(bytecode.POP_TOP)
+
 class Message(Node):
     """ Represent a message send.
     """
@@ -57,6 +67,16 @@ class Message(Node):
             return 'Message({}, {})'.format(self.target, self.args)
         return 'Message({})'.format(self.target)
 
+    def compile(self, ctx, last=False):
+        self.target.compile(ctx)
+        if self.args:
+            self.args.compile(ctx)
+        if last:
+            if self.args:
+                return ctx.emit(bytecode.BUILD_MSGWARGS) # len...
+            ctx.emit(bytecode.BUILD_MSGCHAIN) # len...
+
+
 class Args(Node):
     """ An argument list of a message.
     """
@@ -65,6 +85,9 @@ class Args(Node):
 
     def __repr__(self):
         return 'Args({})'.format(self.values)
+
+    def compile(self, ctx):
+        pass # emit BUILD_TUPLE len(values)
 
 # TERMINALS
 
