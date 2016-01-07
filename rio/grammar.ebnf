@@ -11,6 +11,6 @@ main: block [EOF];
 block: expr [TERM] >block< | expr [TERM]?;
 expr: message >expr< | message;
 message: symbol arguments?;
-arguments: [OP] (expr <argtail>*)? [CP];
-argtail: [ARGSSEP] expr;
+arguments: [OP] <args>? [CP];
+args: expr ([ARGSSEP] expr)* [ARGSSEP]?;
 symbol: <IDENTIFIER> | <NUMBER>;

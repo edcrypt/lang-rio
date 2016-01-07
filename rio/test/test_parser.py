@@ -69,6 +69,8 @@ def test_parse_args():
         ))])]
     )
     assert parse('a(b, c)') == parse('a(\nb,\nc\n)')
+    assert parse('a(b, c)') == parse('a(b,c,)')
+    assert parse('a(b, c)') == parse('a(b,c,\n)')
 
 def test_parse_blocks():
     assert parse('a b c\nd') == Block([
