@@ -68,6 +68,7 @@ def test_parse_args():
              Expr([Message(Identifier('c'))])]
         ))])]
     )
+    assert parse('a(b, c)') == parse('a(\nb,\nc\n)')
 
 def test_parse_blocks():
     assert parse('a b c\nd') == Block([

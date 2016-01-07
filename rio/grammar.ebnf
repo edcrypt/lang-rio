@@ -1,14 +1,16 @@
 IGNORE: " ";
-ARGSSEP: ",";
+ARGSSEP: ",\n?";
 NUMBER: "-?0|[1-9][0-9]*";
 IDENTIFIER: "[a-zA-Z_][0-9a-zA-Z_]*";
-TERM: "\n+|;|;\n+";
+TERM: "\n+|;\n*";
+OP: "\(\n?";
+CP: "\n?\)";
 
 main: block [EOF];
 
 block: expr [TERM] >block< | expr [TERM]?;
 expr: message >expr< | message;
 message: symbol arguments?;
-arguments: ["("] (expr <argtail>*)? [")"];
+arguments: [OP] (expr <argtail>*)? [CP];
 argtail: [ARGSSEP] expr;
 symbol: <IDENTIFIER> | <NUMBER>;
