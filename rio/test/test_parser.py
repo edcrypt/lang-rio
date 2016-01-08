@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 """
 Rio PL interpreter
 ------------------
@@ -85,15 +86,15 @@ def test_parse_blocks():
               Message(Identifier('c'))]),
         Expr([Message(Identifier('d'))]),
     ])
-    assert parse('a;b;c') == parse('a\nb\nc')
+    assert parse('a;b;c') == parse('a\nb\nc # ";" is equivalent to \\n')
     assert parse('a;b;\nc') == parse('a\n\nb\nc')
     assert parse('a;b;c') == parse('a\nb\n\nc\n')
     assert parse('a;b;c') == parse('a\n\n\n\nb\n\n\nc')
-    assert parse('a;b b1;c') == parse('a\nb b1\nc')
+    assert parse('a;b b1;c') == parse('a\nb b1\nc\n#this is a comment, alone')
     assert parse('a;\nb b1;c') == parse('a\nb b1;\n\nc')
     assert parse('a\nb b1;c') == parse('a\nb b1;\n\nc')
-    assert parse('a\nb b1;c') == parse('a\nb b1;\n\nc;')
-    assert parse('a\nb b1;c') == parse('a\nb b1;\n\nc;\n\n')
+    assert parse('a\nb b1;c') == parse('a\nb b1\t;\n\nc;')
+    assert parse('a\nb b1;c') == parse('a\nb b1\f;\n\nc;\n\n')
     assert parse('1;a;b') == Block([
         Expr([Message(ConstantInt('1'))]),
         Expr([Message(Identifier('a'))]),
