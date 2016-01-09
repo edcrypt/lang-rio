@@ -92,6 +92,22 @@ one using *{}*, denoting a table with both indexes and keys.
    t[4] is t["name"]
    => True
 
+   # a 'Mapping' object
+   1:2
+   -> 1:2
+
+
+   # tables can be created from mappings
+   t2 = {"a": "b", ¨c": "d"}
+
+   # dict and list are Core methods that create Tables
+   # with and without keys from other iterables
+   list(1..10)
+   => [1, 2, 3, 4, 5, 6, 7, 8, 9]
+
+   dict((1:2, 2:3))
+   => {1: 2, 2: 3}
+
 Text
 ~~~~
 
@@ -113,12 +129,13 @@ Loops
 ::
 
    # send the message "print" to each item produced by the Range object
-   1..10 each(print(end=" "))
+   # also, "keyword" arguments are passed using mappings
+   1..10 each(print(end: " "))
    -> 1 2 3 4 5 6 7 8 9 10
 
    # longer form -- uses pattern matching to dispatch to the right implementation
    1..10 each(num,
-       num print(end=" ")
+       num print(end: " ")
    )
    -> 1 2 3 4 5 6 7 8 9 10
 
@@ -174,7 +191,6 @@ Objects
 
    Contact describe_as = method(new_descr,
        "Updates the contact description"
-       # None delegates to the local namespace, so you don't need ";" between this expressions
        self _history append(self _description)
        self _description = new_descr
    )
@@ -193,5 +209,5 @@ Objects
        self _history = []
    )
 
-   alex = Contact clone
+   alex = Contact clone("Alex", "alex@example.com", "A good person")
 
