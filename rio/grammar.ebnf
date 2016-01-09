@@ -2,7 +2,7 @@ IGNORE: "[ \f\t]*|#[^\n]*";
 ARGSSEP: ",\n*";
 NUMBER: "-?0|[1-9][0-9]*";
 IDENTIFIER: "[^0-9\(\)\n ;,\f\t\-][^\(\)\n ;,\f\t\-]*";
-TERM: "\n+|;\n*";
+TERM: "\n+|;\n*"; # TODO: ";" should be an operator
 OP: "\(\n*";
 CP: "\n*\)";
 
