@@ -48,8 +48,8 @@ def test_parse_no_args():
     assert parse('a b() c') == parse('a b(\n) c')
 
 def test_parse_args():
-    assert parse('a(b)') == Block(
-        [Expr([Message(Identifier('a'),
+    assert parse('_a(b)') == Block(
+        [Expr([Message(Identifier('_a'),
                        Args([Expr([Message(Identifier('b'))])]),
                        )]
         )])
@@ -58,11 +58,11 @@ def test_parse_args():
                        Args([Expr([Message(ConstantInt('50'))])]),
                        )]
         )])
-    assert parse('5 pow(c)') == Block(
+    assert parse('5 pow(ç)') == Block(
         [Expr([
             Message(ConstantInt('5')),
             Message(Identifier('pow'),
-                    Args([Expr([Message(Identifier('c'))])]))]
+                    Args([Expr([Message(Identifier('ç'))])]))]
         )])
     assert parse('a(b, c)') == Block(
         [Expr([Message(Identifier('a'), Args(

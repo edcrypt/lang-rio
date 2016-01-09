@@ -1,7 +1,7 @@
 IGNORE: "[ \f\t]*|#[^\n]*";
 ARGSSEP: ",\n*";
 NUMBER: "-?0|[1-9][0-9]*";
-IDENTIFIER: "[a-zA-Z_][0-9a-zA-Z_]*";
+IDENTIFIER: "[^0-9\(\)\n ;,\f\t\-][^\(\)\n ;,\f\t\-]*";
 TERM: "\n+|;\n*";
 OP: "\(\n*";
 CP: "\n*\)";
