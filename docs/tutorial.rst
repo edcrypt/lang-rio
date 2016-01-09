@@ -31,6 +31,7 @@ The `=` operator creates attributes. By default, it creates it on the `Core` obj
 As the operator purpose is to have a simple "side effect", it returns `None`.
 
 ::
+
    a = 1
 
    a

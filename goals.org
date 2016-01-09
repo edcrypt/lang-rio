@@ -23,6 +23,8 @@
 **** homoiconicity
      Every expression is a message, every value is an object
 
+**** but even simpler: one single attribution operator
+***** how can one expect me to remember between =, := and ::= which creates, updates and creates setter
 *** Python
 
 **** Style, favored idioms
@@ -144,7 +146,7 @@
    :PROPERTIES:
    :ID:       3DD1F904-684B-4089-8AF4-8345BD263651
    :END:
-   Probably when we need a object space.
+   Probably when we need an object space.
 
 ** TODO I/O support
 
