@@ -4,7 +4,7 @@ Rio
 Tutorial
 --------
 
-Notation: in this tutorial, ``=>`` indicates the result of a previos expression, and ``->`` indicates
+Notation: in this tutorial, ``=>`` indicates the result of a previous expression, and ``->`` indicates
 a print to the standard output.
 
 
@@ -127,7 +127,8 @@ one using ``{}``, denoting a table with both indexes and keys::
 
    # Tables can be created from mappings
    t2 = {a: "a", b: "b"}
-   t2
+
+   t2 eval_keys
    => {1: "a", 2: "b"}
 
    # "dict" and "list" are shortcut Core methods that create Tables with and
@@ -256,3 +257,17 @@ Objects
 
    # Also, we change our views on Alex.
    alex describe_as("Somebody that we used to know.")
+
+   Acquaintance = Object clone
+
+   Acquaintance how_we_met = property(
+       self history["how_we_met"]
+   )
+
+   Acquaintance how_we_met setter(value,
+       self history["how_we_met"] = value
+   )
+
+   alex append_proto(Acquaintance)
+
+   alex how_we_met = "At a convention"
