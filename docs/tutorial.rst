@@ -215,12 +215,20 @@ Objects
 
    # Before we start defining methods, let's check the docs
    help(method)
-   -> Core method(*args, 'code)
+   -> Core method(*args, doc: "", 'code)
    ->     Create a `Method` object.
-   ->     - `args`: the arguments defining the pattern to be matched at message send time.
-   ->     - `code`: the expressions that are executed when the message associated with this
+   ->     - `args`: The arguments defining the pattern to be matched at message send time.
+   ->               Check help(ARGSSPEC) for star-arguments, default values and lazy arguments.
+   ->     - `doc`:  A text documenting the method.
+   ->     - `code`: The message chain executed when the message associated with this
    ->               method is received.
 
+   # yes, *args (star-arguments) is a Message object, and * works as a prefix operator:
+   # it works similar to quoting, but indicates multiple arguments.
+   '(*args)
+   -> *(args)
+
+   # this method will return None: the last -- in this case, only -- expression is returned
    Contact describe = method(
        self _summary_templ format(self name, self email, self _description) print
    )
