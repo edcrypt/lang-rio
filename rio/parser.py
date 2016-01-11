@@ -94,6 +94,8 @@ def parse(source, debug=False):
 
 if __name__ == '__main__':
     import sys
+    from ipdb import launch_ipdb_on_exception
+
     if '--draw' in sys.argv:
         _rio_parser.debug_mode()
     try:
@@ -103,4 +105,5 @@ if __name__ == '__main__':
         sys.exit(1)
     except py.error.ENOENT:
         source = sys.argv[1]
-    print parse(source)
+    with launch_ipdb_on_exception():
+        print parse(source)
