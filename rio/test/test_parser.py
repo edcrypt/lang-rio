@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 """
 Rio PL interpreter
 ------------------
@@ -44,10 +45,11 @@ def test_parse_no_args():
         [Expr([Message(Identifier('a')),
                Message(Identifier('b')),
                Message(Identifier('c'))])])
+    assert parse('a b() c') == parse('a b(\n) c')
 
 def test_parse_args():
-    assert parse('a(b)') == Block(
-        [Expr([Message(Identifier('a'),
+    assert parse('_a(b)') == Block(
+        [Expr([Message(Identifier('_a'),
                        Args([Expr([Message(Identifier('b'))])]),
                        )]
         )])
@@ -56,11 +58,11 @@ def test_parse_args():
                        Args([Expr([Message(ConstantInt('50'))])]),
                        )]
         )])
-    assert parse('5 pow(c)') == Block(
+    assert parse('5 pow(ç)') == Block(
         [Expr([
             Message(ConstantInt('5')),
             Message(Identifier('pow'),
-                    Args([Expr([Message(Identifier('c'))])]))]
+                    Args([Expr([Message(Identifier('ç'))])]))]
         )])
     assert parse('a(b, c)') == Block(
         [Expr([Message(Identifier('a'), Args(
@@ -68,6 +70,11 @@ def test_parse_args():
              Expr([Message(Identifier('c'))])]
         ))])]
     )
+    assert parse('a(b, c)') == parse('a(\nb,\nc\n)')
+    assert parse('a(b, c)') == parse('a(b,c,)')
+    assert parse('a(b, c)') == parse('a(b,c,\n)')
+    assert parse('a(b, c)') == parse('a(\n\nb,\n\nc,\n\n)\n')
+
 
 def test_parse_blocks():
     assert parse('a b c\nd') == Block([
@@ -82,15 +89,15 @@ def test_parse_blocks():
               Message(Identifier('c'))]),
         Expr([Message(Identifier('d'))]),
     ])
-    assert parse('a;b;c') == parse('a\nb\nc')
+    assert parse('a;b;c') == parse('a\nb\nc # ";" is equivalent to \\n')
     assert parse('a;b;\nc') == parse('a\n\nb\nc')
     assert parse('a;b;c') == parse('a\nb\n\nc\n')
     assert parse('a;b;c') == parse('a\n\n\n\nb\n\n\nc')
-    assert parse('a;b b1;c') == parse('a\nb b1\nc')
+    assert parse('a;b b1;c') == parse('a\nb b1\nc\n#this is a comment, alone')
     assert parse('a;\nb b1;c') == parse('a\nb b1;\n\nc')
     assert parse('a\nb b1;c') == parse('a\nb b1;\n\nc')
-    assert parse('a\nb b1;c') == parse('a\nb b1;\n\nc;')
-    assert parse('a\nb b1;c') == parse('a\nb b1;\n\nc;\n\n')
+    assert parse('a\nb b1;c') == parse('a\nb b1\t;\n\nc;')
+    assert parse('a\nb b1;c') == parse('a\nb b1\f;\n\nc;\n\n')
     assert parse('1;a;b') == Block([
         Expr([Message(ConstantInt('1'))]),
         Expr([Message(Identifier('a'))]),
