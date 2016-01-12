@@ -1,8 +1,8 @@
 IGNORE: "[ \f\t]*|#[^\n]*";
 ARGSSEP: ",\n*";
 NUMBER: "-?0|[1-9][0-9]*";
-IDENTIFIER: "[^0-9\(\)\n ;,\f\t\-][^\(\)\n ;,\f\t\-]*";
-TERM: "\n+|;\n*";
+IDENTIFIER: "[^0-9\(\)\n ;,\f\t\-][^\(\)\n ;,\f\t\-]*|;";
+TERM: "\n+";
 OP: "\(\n*";
 CP: "\n*\)";
 
@@ -11,6 +11,5 @@ main: block [EOF];
 block: expr [TERM] >block< | expr [TERM]?;
 expr: message >expr< | message;
 message: symbol arguments?;
-arguments: [OP] <args>? [CP];
-args: expr ([ARGSSEP] expr)* ([ARGSSEP] block?)?;
+arguments: [OP] expr ([ARGSSEP] expr)* [ARGSSEP]? [CP];
 symbol: <IDENTIFIER> | <NUMBER>;

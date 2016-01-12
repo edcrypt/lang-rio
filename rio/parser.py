@@ -8,13 +8,20 @@ Email:  eduardo.padoan@gmail.com
 """
 
 import py
+from rpython.rlib.parsing.parsing import ParseError
 from rpython.rlib.parsing.tree import RPythonVisitor
 from rpython.rlib.parsing.ebnfparse import parse_ebnf, make_parse_function
+
 
 from rio import RIO_DIR
 from rio.ast import (
     Expr, Block, Message, Args, ConstantInt, Identifier
 )
+
+
+
+class RioSyntaxError(Exception):
+    pass
 
 
 class Transformer(RPythonVisitor):
@@ -85,15 +92,22 @@ class RioParser(object):
         """
         self.transformer.debug = True
 
+
 _rio_parser = RioParser()
+
 
 def parse(source, debug=False):
     """ Parse the source code and produce an AST
     """
-    return _rio_parser.gen_ast(source)
+    try:
+        return _rio_parser.gen_ast(source)
+    except ParseError as err:
+        print err.nice_error_message(source=source)
+        raise RioSyntaxError(err)
 
 if __name__ == '__main__':
     import sys
+
     if '--draw' in sys.argv:
         _rio_parser.debug_mode()
     try:
@@ -103,4 +117,7 @@ if __name__ == '__main__':
         sys.exit(1)
     except py.error.ENOENT:
         source = sys.argv[1]
-    print parse(source)
+    try:
+        print parse(source)
+    except RioSyntaxError:
+        sys.exit(1)
