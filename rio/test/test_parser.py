@@ -25,13 +25,11 @@ def test_parse_basic():
                Message(Identifier('b')),
                Message(Identifier('c'))])]
     )
-
-def test_parse_no_args():
-    # Yes, we don't have Python's distinction between getting an attrib
-    # and calling a method. But you should be able to 'quote a message.
-    # Also, we can use get_slot
-    assert parse('a') == Block([Expr([Message(Identifier('a'))])])
-    assert parse('a\n') == Block([Expr([Message(Identifier('a'))])])
+    assert parse('a; c') == Block(
+        [Expr([Message(Identifier('a')),
+               Message(Identifier(';')),
+               Message(Identifier('c'))])]
+    )
 
 def test_parse_args():
     assert parse('_a(b)') == Block(
@@ -67,5 +65,11 @@ def test_parse_blocks():
         Expr([Message(Identifier('a')),
               Message(Identifier('b')),
               Message(Identifier('c'))]),
+        Expr([Message(Identifier('d'))]),
+    ])
+    assert parse('a\nb\nc\nd') == Block([
+        Expr([Message(Identifier('a'))]),
+        Expr([Message(Identifier('b'))]),
+        Expr([Message(Identifier('c'))]),
         Expr([Message(Identifier('d'))]),
     ])
