@@ -30,6 +30,10 @@ def test_parse_basic():
                Message(Identifier(';')),
                Message(Identifier('c'))])]
     )
+    assert parse('(a)') == parse('a')
+    assert parse('(a b)') == parse('a b')
+    assert parse('(a b) c') == parse('a b c')
+    assert parse('((a b) c d) e') == parse('a b c d e')
 
 def test_parse_args():
     assert parse('_a(b)') == Block(
@@ -54,11 +58,11 @@ def test_parse_args():
              Expr([Message(Identifier('c'))])]
         ))])]
     )
-    assert parse('a(b, c)') == parse('a(\nb,\nc\n)')
+    assert parse('a(b, (c))') == parse('a(b,c)')
     assert parse('a(b, c)') == parse('a(b,c,)')
+    assert parse('a(b, c)') == parse('a(\nb,\nc\n)')
     assert parse('a(b, c)') == parse('a(b,c,\n)')
     assert parse('a(b, c)') == parse('a(\n\nb,\n\nc,\n\n)\n')
-
 
 def test_parse_blocks():
     assert parse('a b c\nd') == Block([
