@@ -4,9 +4,9 @@ Rio
 Tutorial
 --------
 
-Notation: in this tutorial, ``=>`` indicates the result of a previous expression, and ``->`` indicates
-a print to the standard output.
-
+Notation
+    In this tutorial, ``=>`` indicates the result of a previous expression, and ``->`` indicates
+    a print to the standard output.
 
 Math
 ~~~~
@@ -25,13 +25,16 @@ Expressions involving operators get "shuffled", or normalized, to their canonica
    2 sqrt
    => 1.414214
 
+   # Ignore the evaluation of the expression before ";"
+   2-1; 2*3
+   => 6
 
 Variables
 ~~~~~~~~~
 
 The ``=`` operator creates attributes. By default, it creates them on the ``Core`` object.
 
-As the operator exclusive purpose is to have a "side effect", it returns ``None``.
+As the operator exclusive purpose is to have a "side effect", the return is ``None``.
 
 ::
 
@@ -42,24 +45,31 @@ As the operator exclusive purpose is to have a "side effect", it returns ``None`
 
    b = 2 * 3
 
-   a + b
+   c = a + b
+
+   c
    => 7
 
 
 Conditions
 ~~~~~~~~~~
 
-The flow is controled with ``Object if_true`` and ``Object if_false``::
+Conditional control flow is done with ``Object if_true`` and ``Object if_false``.
+There is also a ternary operator form with ``Core ?!``::
 
    a = 2
 
    (a == 1) if_true("a is one" print) if_false("a is not one" print)
    -> a is not one
 
-   # A ternary operator form is also supported
    0 ? "0's boolean value is true!" ! "0 (and empty sequences) has a false boolean value"
    => "0 (and empty sequences) has a false boolean value"
 
+   # A little introspection
+   help(Core ?!)
+   -> Core ?!(condition, 'do_if_true, 'do_if_false)
+   ->     Evaluate 'do_if_true when the condition boolean value is true,
+   ->     'do_if_false otherwise.
 
 Tuples
 ~~~~~~
@@ -125,7 +135,7 @@ one using ``{}``, denoting a table with both indexes and keys::
    m eval_key
    => 1:2
 
-   # Tables can be created from mappings
+   # Tables can be created from mappings between {}
    t2 = {a: "a", b: "b"}
 
    t2 eval_keys
@@ -163,7 +173,17 @@ Text
 Loops
 ~~~~~
 
-::
+
+The methods ``Message while_true`` and ``Iterable each`` provide ways to repeat an expression::
+
+   found = False
+
+   numbers = [1, 3, 6] iter
+   # search a number divisible by 2
+   '(not found) while_true(
+       i = numbers next
+       found = not i % 2
+   )
 
    # Send the message "print" to each item produced by the Range object
    # Also, "keyword" arguments are passed using mappings from names to values
@@ -182,12 +202,6 @@ Loops
    -> Range each('name, 'msg)
    ->     For each item, send `msg`, with `name` in the local namespace as the current item.
 
-   found = False
-
-   # "while_true" is a method of Message that evaluates the message repeatedly
-   '(not found) while_true(
-       found = search()
-   )
 
 Objects
 ~~~~~~~
@@ -234,7 +248,9 @@ Objects
    )
 
    Contact describe_as = method(new_descr,
-       "Updates the contact description"
+       "Updates the contact description",
+       # The following is a single expression.
+       # Note that we dont need ";", as None delegates to Core
        self _history append(self _description)
        self _description = new_descr
    )
