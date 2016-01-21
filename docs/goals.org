@@ -150,7 +150,7 @@
 
 ** TODO I/O support
 
-** TODO add strings, other numeric types
+** TODO add Text (unicode strings), other numeric types, ranges
    :PROPERTIES:
    :ID:       DDE319A3-5918-44BB-904A-A23F9CDCD43B
    :END:
@@ -160,6 +160,8 @@
    :ID:       E7C952D1-AA7B-4091-A5E5-2E7F4D39D9B2
    :END:
    To support basic C/Python-style algebraic syntaxes and boolean operators as method calls.
+
+** TODO collections: tuples, tables
 
 ** TODO Coroutines
    Basic coroutine support - should serve as basis for the scheduler, actors, futures

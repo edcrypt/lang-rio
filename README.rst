@@ -8,6 +8,8 @@ OOPL, only a bit more pythonic in style and favored idioms.
 
 See goals.org_ file for design goals, ideas and progress.
 
+See the tutorial_ file for an outline of what it should look like.
+
 To check the parser working::
 
   pip install -r requirements
@@ -48,7 +50,8 @@ References
 .. _All Singing All Dancing Python Bytecode: https://www.youtube.com/watch?v=0IzXcjHs-P8#t=36s
 .. _Byterun: https://github.com/nedbat/byterun
 .. _Maynard: https://bitbucket.org/larry/maynard
-.. _goals.org: ./goals.org
+.. _goals.org: ./docs/goals.org
+.. _tutorial: ./docs/tutorial.rst
 .. _Io: http://iolanguage.org
 .. _Getting Started:  http://doc.pypy.org/en/latest/getting-started-dev.html
 .. _Coding Guide: http://doc.pypy.org/en/latest/coding-guide.html

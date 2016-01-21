@@ -8,8 +8,9 @@ CP: "\n*\)";
 
 main: block [EOF];
 
-block: expr [TERM] >block< | expr [TERM]?;
-expr: message >expr< | message;
+## CORE LANGUAGE
+block:  expr [TERM] >block< | expr [TERM]?;
+expr: message >expr<? | [OP] >expr< [CP] >expr<?;
 message: symbol arguments?;
 arguments: [OP] expr ([ARGSSEP] expr)* [ARGSSEP]? [CP];
 symbol: <IDENTIFIER> | <NUMBER>;

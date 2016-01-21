@@ -25,13 +25,15 @@ def test_parse_basic():
                Message(Identifier('b')),
                Message(Identifier('c'))])]
     )
-
-def test_parse_no_args():
-    # Yes, we don't have Python's distinction between getting an attrib
-    # and calling a method. But you should be able to 'quote a message.
-    # Also, we can use get_slot
-    assert parse('a') == Block([Expr([Message(Identifier('a'))])])
-    assert parse('a\n') == Block([Expr([Message(Identifier('a'))])])
+    assert parse('a; c') == Block(
+        [Expr([Message(Identifier('a')),
+               Message(Identifier(';')),
+               Message(Identifier('c'))])]
+    )
+    assert parse('(a)') == parse('a')
+    assert parse('(a b)') == parse('a b')
+    assert parse('(a b) c') == parse('a b c')
+    assert parse('((a b) c d) e') == parse('a b c d e')
 
 def test_parse_args():
     assert parse('_a(b)') == Block(
@@ -56,16 +58,22 @@ def test_parse_args():
              Expr([Message(Identifier('c'))])]
         ))])]
     )
-    assert parse('a(b, c)') == parse('a(\nb,\nc\n)')
+    assert parse('a(b, (c))') == parse('a(b,c)')
     assert parse('a(b, c)') == parse('a(b,c,)')
+    assert parse('a(b, c)') == parse('a(\nb,\nc\n)')
     assert parse('a(b, c)') == parse('a(b,c,\n)')
     assert parse('a(b, c)') == parse('a(\n\nb,\n\nc,\n\n)\n')
-
 
 def test_parse_blocks():
     assert parse('a b c\nd') == Block([
         Expr([Message(Identifier('a')),
               Message(Identifier('b')),
               Message(Identifier('c'))]),
+        Expr([Message(Identifier('d'))]),
+    ])
+    assert parse('a\nb\nc\nd') == Block([
+        Expr([Message(Identifier('a'))]),
+        Expr([Message(Identifier('b'))]),
+        Expr([Message(Identifier('c'))]),
         Expr([Message(Identifier('d'))]),
     ])
