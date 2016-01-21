@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 """
 Rio PL interpreter
 ------------------
@@ -20,7 +21,7 @@ BUILD_MSGWARGS   2
 Author: Eduardo de Oliveira Padoan
 Email:  eduardo.padoan@gmail.com
 """
-
+from __future__ import print_function
 
 
 BYTECODES = [
@@ -57,6 +58,7 @@ BYTECODES = [
     # TODO...
 ]
 
+
 for i, bytecode in enumerate(BYTECODES):
     globals()[bytecode] = i
 
@@ -76,16 +78,16 @@ class CompilerContext(object):
         try:
             return self._names_to_numbers[name]
         except KeyError:
-            self.names_to_numbers[name] = len(self.names)
+            self.names_to_numbers[name] = len(self._names)
             self._names.append(name)
-            return len(self.names) - 1
+            return len(self._names) - 1
 
     def emit(self, bytecode, arg=0):
         self.data.append(chr(bytecode))
         self.data.append(chr(arg))
 
     def create_bytecode(self):
-        return Bytecode("".join(self.data), self.constants[:], len(self.names))
+        return Bytecode("".join(self.data), self.constants[:], len(self._names))
 
 
 class Bytecode(object):
@@ -100,8 +102,9 @@ class Bytecode(object):
         for i in range(0, len(self.code), 2):
             c = self.code[i]
             c2 = self.code[1 + 1]
-            lines.append(bytecodes[ord(c)] + " " + str(ord(c2)))
+            lines.append(BYTECODES[ord(c)] + " " + str(ord(c2)))
         return '\n'.join(lines)
+
 
 def compile_ast(astnode):
     c = CompilerContext()

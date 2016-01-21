@@ -36,7 +36,7 @@ class Block(Node):
     def compile(self, ctx):
         """ Compile each statement in the block.
         """
-        for expr in self.expr:
+        for expr in self.exprs:
             expr.compile(ctx)
 
 class Expr(Node):
