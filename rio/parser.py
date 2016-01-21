@@ -6,8 +6,11 @@ Rio PL interpreter
 Author: Eduardo de Oliveira Padoan
 Email:  eduardo.padoan@gmail.com
 """
+from __future__ import print_function
+#from __future__ import unicode_literals
 
 import py
+
 from rpython.rlib.parsing.parsing import ParseError
 from rpython.rlib.parsing.tree import RPythonVisitor
 from rpython.rlib.parsing.ebnfparse import parse_ebnf, make_parse_function
@@ -102,7 +105,7 @@ def parse(source, debug=False):
     try:
         return _rio_parser.gen_ast(source)
     except ParseError as err:
-        print err.nice_error_message(source=source)
+        print(err.nice_error_message(source=source))
         raise RioSyntaxError(err)
 
 if __name__ == '__main__':
@@ -113,11 +116,11 @@ if __name__ == '__main__':
     try:
         source = py.path.local(sys.argv[1], expanduser=True).read('rt')
     except IndexError:
-        print 'python -m rio.parser file_or_code [--draw]'
+        print('python -m rio.parser file_or_code [--draw]')
         sys.exit(1)
     except py.error.ENOENT:
         source = sys.argv[1]
     try:
-        print parse(source)
+        print(parse(source))
     except RioSyntaxError:
         sys.exit(1)

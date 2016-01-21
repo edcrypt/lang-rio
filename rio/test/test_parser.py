@@ -7,6 +7,7 @@ Rio PL interpreter
 Author: Eduardo de Oliveira Padoan
 Email:  eduardo.padoan@gmail.com
 """
+from __future__ import print_function
 
 from rio.parser import parse
 from rio.ast import (
