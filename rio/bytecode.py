@@ -23,6 +23,8 @@ Email:  eduardo.padoan@gmail.com
 """
 from __future__ import print_function
 
+import py
+
 
 BYTECODES = [
     ### Compile-time emitted bytecodes
@@ -105,9 +107,28 @@ class Bytecode(object):
             lines.append(BYTECODES[ord(c)] + " " + str(ord(c2)))
         return '\n'.join(lines)
 
+    def __repr__(self):
+        return self.dump()
 
 def compile_ast(astnode):
     c = CompilerContext()
     astnode.compile(c)
     c.emit(RETURN_VALUE, 0)
     return c.create_bytecode()
+
+
+if __name__ == '__main__':
+    import sys
+    from rio.parser import parse, RioSyntaxError
+
+    try:
+        source = py.path.local(sys.argv[1], expanduser=True).read('rt')
+    except IndexError:
+        print('python -m rio.bytecode file_or_code')
+        sys.exit(1)
+    except py.error.ENOENT:
+        source = sys.argv[1]
+    try:
+        print(compile_ast(parse(source)))
+    except RioSyntaxError:
+        sys.exit(1)

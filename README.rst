@@ -10,11 +10,12 @@ See goals.org_ file for design goals, ideas and progress.
 
 See the tutorial_ file for an outline of what it should look like.
 
-To check the parser working::
+To check the parser and the compiler working::
 
   pip install -r requirements
   pip install http://www.pygame.org/ftp/pygame-1.9.1release.tar.gz
   python -m rio.parser "a b c(d); 50" --draw
+  python -m rio.bytecode "a b c"
 
 
 References
