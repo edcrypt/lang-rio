@@ -38,6 +38,7 @@ class Block(Node):
         """
         for expr in self.exprs:
             expr.compile(ctx)
+            ctx.emit(bytecode.POP_TOP)
 
 class Expr(Node):
     """ An expression (a message chain).
@@ -51,9 +52,8 @@ class Expr(Node):
     def compile(self, ctx):
         for msg in self.msgchain[:-1]:
             msg.compile(ctx)
-        self.msgchain[-1].compile(ctx, last=True)
-        # emit SEND_MSG?
-        ctx.emit(bytecode.POP_TOP)
+        self.msgchain[-1].compile(ctx, len(self.msgchain))
+        ctx.emit(bytecode.SEND_MSG)
 
 class Message(Node):
     """ Represent a message send.
@@ -68,14 +68,14 @@ class Message(Node):
             return 'Message({}, {})'.format(self.target, self.args)
         return 'Message({})'.format(self.target)
 
-    def compile(self, ctx, last=False):
+    def compile(self, ctx, chain=0):
         self.target.compile(ctx)
         if self.args:
             self.args.compile(ctx)
-        if last:
+        if chain:
             if self.args:
-                return ctx.emit(bytecode.BUILD_MSGWARGS) # len...
-            ctx.emit(bytecode.BUILD_MSGCHAIN) # len...
+                ctx.emit(bytecode.BUILD_MSGWARGS, chain)
+            ctx.emit(bytecode.BUILD_MSGCHAIN, chain)
 
 
 class Args(Node):
@@ -88,7 +88,10 @@ class Args(Node):
         return 'Args({})'.format(self.values)
 
     def compile(self, ctx):
-        pass # emit BUILD_TUPLE len(values)
+        for val in self.values:
+            val.compile(ctx)
+        ctx.emit(bytecode.BUILD_TUPLE, len(self.values))
+
 
 # TERMINALS
 
@@ -101,6 +104,9 @@ class ConstantInt(Node):
     def __repr__(self):
         return 'ConstantInt({})'.format(self.intval)
 
+    def compile(self, ctx):
+        ctx.emit(bytecode.PUSH_CONST, ctx.register_constant(self.intval))
+
 class Identifier(Node):
     """ Identifier fora slot reference.
     Either an attribure or a method.
@@ -110,3 +116,6 @@ class Identifier(Node):
 
     def __repr__(self):
         return 'Identifier("{}")'.format(self.varname)
+
+    def compile(self, ctx):
+        ctx.emit(bytecode.PUSH_NAME, ctx.register_var(self.varname))

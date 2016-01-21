@@ -70,7 +70,7 @@ class CompilerContext(object):
         self.data = []
         self.constants = []
         self._names = []
-        self._names_to_numbers = []
+        self._names_to_numbers = {}
 
     def register_constant(self, value):
         self.constants.append(value)
@@ -80,7 +80,7 @@ class CompilerContext(object):
         try:
             return self._names_to_numbers[name]
         except KeyError:
-            self.names_to_numbers[name] = len(self._names)
+            self._names_to_numbers[name] = len(self._names)
             self._names.append(name)
             return len(self._names) - 1
 
