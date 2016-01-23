@@ -20,8 +20,10 @@ class TestCompiler(object):
                 if i.strip()] == bc.dump().splitlines()
 
     def test_basic(self):
-        self.check_compile("1;", '''
+        self.check_compile("1", '''
         PUSH_CONST 0
+        BUILD_MSGCHAIN 1
+        SEND_MSG 0
         POP_TOP 0
         RETURN_VALUE 0
         ''')
@@ -31,7 +33,11 @@ class TestCompiler(object):
         PUSH_NAME 0
         PUSH_NAME 1
         PUSH_CONST 0
+        BUILD_MSGCHAIN 1
+        SEND_MSG 0
+        BUILD_TUPLE 1
         BUILD_MSGWARGS 2
+        SEND_MSG 0
         POP_TOP 0
         RETURN_VALUE 0
         ''')

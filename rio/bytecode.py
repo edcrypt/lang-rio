@@ -103,7 +103,7 @@ class Bytecode(object):
         i = 0
         for i in range(0, len(self.code), 2):
             c = self.code[i]
-            c2 = self.code[1 + 1]
+            c2 = self.code[i + 1]
             lines.append(BYTECODES[ord(c)] + " " + str(ord(c2)))
         return '\n'.join(lines)
 

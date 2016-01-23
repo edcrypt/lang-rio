@@ -75,7 +75,8 @@ class Message(Node):
         if chain:
             if self.args:
                 ctx.emit(bytecode.BUILD_MSGWARGS, chain)
-            ctx.emit(bytecode.BUILD_MSGCHAIN, chain)
+            else:
+                ctx.emit(bytecode.BUILD_MSGCHAIN, chain)
 
 
 class Args(Node):
