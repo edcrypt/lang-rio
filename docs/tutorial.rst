@@ -13,7 +13,8 @@ Math
 
 Basic arithmetic is supported.
 
-Expressions involving operators get "shuffled", or normalized, to their canonical **message send** form::
+Expressions involving operators get "shuffled", or normalized, to their canonical **message send**
+form::
 
    1+1
    => 2
@@ -71,16 +72,6 @@ There is also a ternary operator form with ``Core ?!``::
    ->     Evaluate 'do_if_true when the condition boolean value is true,
    ->     'do_if_false otherwise.
 
-Tuples
-~~~~~~
-
-
-::
-
-   (1, 2)
-
-   a, b = 1, 2
-
 
 Tables
 ~~~~~~
@@ -89,13 +80,17 @@ Tables are colletions of objects. Each item is composed of a positional *index* 
 an optional *key* (any immutable object - tuples, text, numbers), and a *value*.
 Indexes and keys are used to locate values in the table.
 
-There are two representations for the table: one using ``[]``, denoting a table without keys, and
-one using ``{}``, denoting a table with both indexes and keys::
+There are three representations for the table: one using ``()``, denoting a "frozen" (immutable)
+list, one using ``[]``, denoting a table without keys, and one using ``{}``, denoting a table
+with both indexes and keys::
 
    t = [1, 2, 3]
 
    t
    => [1, 2, 3]
+
+   t frozen
+   => (1, 2, 3)
 
    # A list is also an Iterable, so it has some useful methods
    t any(> 2)
@@ -149,6 +144,9 @@ one using ``{}``, denoting a table with both indexes and keys::
    dict((1:2, 2:3))
    => {1: 2, 2: 3}
 
+   # "tuple" is another shortcut, for creating immutable Tables
+   tuple(0..3)
+   => (0, 1, 2)
 
 Text
 ~~~~
@@ -208,13 +206,13 @@ Objects
 
 ::
 
-   Contact = Object clone
+   Contact = Object clone do(
+       name = None
+       email = None
+   )
 
    Contact proto
    => Object
-
-   Contact name = None
-   Contact email = None
 
    # _ to avoid external access
    Contact _description = None
@@ -237,14 +235,14 @@ Objects
    ->     - `code`: The message chain executed when the message associated with this
    ->               method is received.
 
-   # yes, *args (star-arguments) is a Message object, and * works as a prefix operator:
+   # yes, "*args" (star-arguments) is a Message object, and * works as a prefix operator:
    # it works similar to quoting, but indicates multiple arguments.
    '(*args)
    -> *(args)
 
    # this method will return None: the last -- in this case, only -- expression is returned
    Contact describe = method(
-       self _summary_templ format(self name, self email, self _description) print
+       self _summary_template format(self name, self email, self _description) print
    )
 
    Contact describe_as = method(new_descr,
