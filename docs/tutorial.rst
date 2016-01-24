@@ -60,8 +60,13 @@ There is also a ternary operator form with ``Core ?!``::
 
    a = 2
 
-   (a == 1) if_true("a is one" print) if_false("a is not one" print)
+   (a == 1) if_true(
+       "a is one" print
+   ) if_false(
+       "a is not one" print
+   )
    -> a is not one
+   => False
 
    0 ? "0's boolean value is true!" ! "0 (and empty sequences) has a false boolean value"
    => "0 (and empty sequences) has a false boolean value"
@@ -72,6 +77,23 @@ There is also a ternary operator form with ``Core ?!``::
    ->     Evaluate 'do_if_true when the condition boolean value is true,
    ->     'do_if_false otherwise.
 
+   a case(== "a",
+       "obvously not" print
+   ) case(== "b",
+       "neither..." print
+   )
+   => CaseSwitch(a == "a", a == "b")
+
+   # CaseSwitch objects support "else" that return True when their block is executed
+   a case(> 2,
+       "a > 2" print
+   ) case(< 2,
+       "a < 2" print
+   ) else(
+       "a is b" print
+   )
+   -> a is b
+   => True
 
 Tables
 ~~~~~~
